@@ -26,7 +26,6 @@ populatejs.cloneNode = function(node, population) {
 populatejs.clearPopulateClasses = function(node) {
     var classesString = node.attr('class');
     var classes = classesString.split(" ");
-    console.log(classes);
     for (var i = 0; i < classes.length; i++) {
 
         if (classes[i].match(/populate-inner(.*)(\d+)/)) {
