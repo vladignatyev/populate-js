@@ -22,7 +22,8 @@ populatejs.readPopulateClass = function (node) {
 };
 
 
-populatejs.cloneNode = function (node, population) {
+populatejs.cloneNode = function (node) {
+    var population = populatejs.readPopulateClass(node);
     if (!population) return;
     if (population.hasOwnProperty('populate-inner')) {
         var content = node.html();

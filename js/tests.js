@@ -45,8 +45,7 @@ test('cloneNode: should add cloned sibling and mark it populated', function () {
     $('<ol><li class="populate-3">foobar</li></ol>').appendTo('#qunit-fixture');
     var $node = $($('#qunit-fixture').find('ol>li')[0]);
 
-    var population = populatejs.readPopulateClass($node);
-    populatejs.cloneNode($node, population);
+    populatejs.cloneNode($node);
 
     var $lis = $('#qunit-fixture').find('ol>li');
     equal($lis.length, 3);
@@ -64,7 +63,7 @@ test('cloneNode: should not populate', function () {
     $('<ol><li>foobar</li></ol>').appendTo('#qunit-fixture');
     var $node = $($('#qunit-fixture').find('ol>li')[0]);
 
-    populatejs.cloneNode($node, populatejs.readPopulateClass($node));
+    populatejs.cloneNode($node);
 
     var $lis = $('#qunit-fixture').find('ol>li');
     equal($lis.length, 1);
@@ -74,8 +73,7 @@ test('cloneNode: should populate inner content', function () {
     $('<ol><li class="populate-inner-3">foobar<em>test</em></li></ol>').appendTo('#qunit-fixture');
     var $node = $($('#qunit-fixture').find('ol>li')[0]);
 
-    var population = populatejs.readPopulateClass($node);
-    populatejs.cloneNode($node, population);
+    populatejs.cloneNode($node);
 
     equal($node.html(), 'foobar<em>test</em>foobar<em>test</em>foobar<em>test</em>');
 });
@@ -84,8 +82,7 @@ test('cloneNode: should populate inner content and node', function () {
     $('<ol><li class="populate-2 populate-inner-3">foobar<em>test</em></li></ol>').appendTo('#qunit-fixture');
     var $node = $($('#qunit-fixture').find('ol>li')[0]);
 
-    var population = populatejs.readPopulateClass($node);
-    populatejs.cloneNode($node, population);
+    populatejs.cloneNode($node);
 
     var $lis = $('#qunit-fixture').find('ol>li');
     equal($lis.length, 2);
