@@ -1,4 +1,4 @@
-module('readPopulateClass');
+module('Parse CSS API');
 test('readPopulateClass: should return null', function () {
     equal(populatejs.readPopulateClass($('<li></li>')), null);
     equal(populatejs.readPopulateClass($('<li class="foobar"></li>')), null);
@@ -26,7 +26,7 @@ test('readPopulateClass: should read pair of first declarations', function () {
             "populate": 10});
 });
 
-module('clearPopulateClasses');
+module('Clearing populated nodes');
 test('clearPopulateClasses', function () {
     var $node = $('<li class="populate-2"></li>');
     populatejs.clearPopulateClasses($node);
@@ -40,7 +40,7 @@ test('clearPopulateClasses', function () {
     ok($node.hasClass('foobar'), 'should save user classes');
 });
 
-module('cloneNode');
+module('Nodes cloning');
 test('cloneNode: should add cloned sibling and mark it populated', function () {
     $('<ol><li class="populate-3">foobar</li></ol>').appendTo('#qunit-fixture');
     var $node = $($('#qunit-fixture').find('ol>li')[0]);
@@ -67,7 +67,7 @@ test('cloneNode: should not populate', function () {
     populatejs.cloneNode($node, populatejs.readPopulateClass($node));
 
     var $lis = $('#qunit-fixture').find('ol>li');
-    equal($lis.length,1);
+    equal($lis.length, 1);
 });
 
 test('cloneNode: should populate inner content', function () {
@@ -93,4 +93,51 @@ test('cloneNode: should populate inner content and node', function () {
         equal($($lis[i]).html(), 'foobar<em>test</em>foobar<em>test</em>foobar<em>test</em>');
     }
 
+});
+
+module('Tree traversing');
+
+var treeFixture = '<div id="1">' +
+    '    <div id="2"></div>' +
+    '    <div id="3">' +
+    '        <div id="5" class="populate-2">' +
+    '            <div id="8"></div>' +
+    '            <div id="9" class="populate-2">' +
+    '                <div id="13">' +
+    '                    <div id="16">' +
+    '                        <div id="18"></div>' +
+    '                        <div id="19"></div>' +
+    '                    </div>' +
+    '                    <div id="17">' +
+    '                        <div id="20" class="populate-2">' +
+    '                            <div id="22"></div>' +
+    '                            <div id="23"></div>' +
+    '                        </div>' +
+    '                        <div id="21"></div>' +
+    '                    </div>' +
+    '                </div>' +
+    '            </div>' +
+    '            <div id="10"></div>' +
+    '            <div id="11" class="populate-2">' +
+    '                <div id="14"></div>' +
+    '                <div id="15"></div>' +
+    '            </div>' +
+    '        </div>' +
+    '        <div id="6" class="populate-inner-2">' +
+    '            <div id="12"></div>' +
+    '        </div>' +
+    '        <div id="7"></div>' +
+    '    </div>' +
+    '    <div id="4"></div>' +
+    '</div>';
+
+test('obtainTerminalPopulatingNodes: should properly find terminal nodes on populating forest', function () {
+    $(treeFixture).appendTo($('#qunit-fixture'));
+    var $root = $('#1');
+    var terminals = populatejs.obtainTerminalPopulatingNodes($root);
+    console.log(terminals);
+    equal(terminals.length, 3);
+    equal(terminals[0].attr('id'), '20');
+    equal(terminals[1].attr('id'), '11');
+    equal(terminals[1].attr('id'), '6');
 });
