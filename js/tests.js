@@ -18,6 +18,19 @@ test('readPopulateClass: should read populate-inner-N declaration', function(){
     deepEqual(populatejs.readPopulateClass("foobar populat foo populate-inner5"), ["populate-inner", 5]);
 });
 
+module('clearPopulateClasses');
+test('clearPopulateClasses', function(){
+    var $node = $('<li class="populate-2"></li>');
+    populatejs.clearPopulateClasses($node);
+    ok(!$node.hasClass('populate-2'), 'should not save populate-2 class');
+
+    var $node = $('<li class="foobar populate-7 populate3 populate-inner4"></li>');
+    ok(!$node.hasClass('populate-7'), 'should not save populate-7 class');
+    ok(!$node.hasClass('populate3'), 'should not save populate3 class');
+    ok(!$node.hasClass('populate-inner4'), 'should not save populate-inner4 class');
+    ok($node.hasClass('foobar'), 'should save user classes');
+});
+
 module('cloneNode');
 test('cloneNode: should add cloned sibling and mark it populated', function(){
     $('<ol><li class="populate-2">foobar</li></ol>').appendTo('#qunit-fixture');
