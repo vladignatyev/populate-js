@@ -18,6 +18,7 @@ populatejs.readPopulateClass = function (classesString) {
 
 populatejs.cloneNode = function(node, population) {
     var $clone = node.clone();
+    populatejs.clearPopulateClasses($clone);
     $clone.addClass('populated');
     node.after($clone);
 };
