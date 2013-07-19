@@ -131,10 +131,10 @@ var treeFixture = '<div id="1">' +
     '    <div id="4"></div>' +
     '</div>';
 
-test('obtainTerminalPopulatingNodes: should properly find terminal nodes on populating forest', function () {
+test('findTerminalPopulatingNodes: should properly find terminal nodes on populating forest', function () {
     $(treeFixture).appendTo($('#qunit-fixture'));
     var $root = $('#1');
-    var terminals = populatejs.obtainTerminalPopulatingNodes($root);
+    var terminals = populatejs.findTerminalPopulatingNodes($root);
     console.log(terminals);
     equal(terminals.length, 3);
     equal(terminals[0].attr('id'), '20');
