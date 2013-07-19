@@ -1,3 +1,4 @@
+module('readPopulateClass');
 test('readPopulateClass: should return null', function(){
     equal(populatejs.readPopulateClass(null), null);
     equal(populatejs.readPopulateClass("foobar"), null);
@@ -17,3 +18,18 @@ test('readPopulateClass: should read populate-inner-N declaration', function(){
     deepEqual(populatejs.readPopulateClass("foobar populat foo populate-inner5"), ["populate-inner", 5]);
 });
 
+module('cloneNode');
+test('cloneNode: should add cloned sibling and mark it populated', function(){
+    $("<ol><li>foobar</li></ol>").appendTo('#qunit-fixture');
+    var $node = $($('#qunit-fixture').find('ol>li')[0]);
+
+    var population = populatejs.readPopulateClass("populate-2");
+    populatejs.cloneNode($node, population);
+
+    var $lis = $('#qunit-fixture').find('ol>li');
+    equal($lis.length, 2);
+
+    ok($($lis[1]).hasClass('populated'));
+    equal($($lis[1]).html(), 'foobar');
+
+});
