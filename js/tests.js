@@ -20,10 +20,10 @@ test('readPopulateClass: should read populate-inner-N declaration', function(){
 
 module('cloneNode');
 test('cloneNode: should add cloned sibling and mark it populated', function(){
-    $("<ol><li>foobar</li></ol>").appendTo('#qunit-fixture');
+    $('<ol><li class="populate-2">foobar</li></ol>').appendTo('#qunit-fixture');
     var $node = $($('#qunit-fixture').find('ol>li')[0]);
 
-    var population = populatejs.readPopulateClass("populate-2");
+    var population = populatejs.readPopulateClass($node.className);
     populatejs.cloneNode($node, population);
 
     var $lis = $('#qunit-fixture').find('ol>li');
@@ -32,4 +32,5 @@ test('cloneNode: should add cloned sibling and mark it populated', function(){
     ok($($lis[1]).hasClass('populated'));
     equal($($lis[1]).html(), 'foobar');
 
+    ok(!$($lis[1]).hasClass('populate-2'), "should not save populate* classes for populated nodes");
 });
