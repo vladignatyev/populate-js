@@ -25,6 +25,14 @@ populatejs.readPopulateClass = function (node) {
 
 populatejs.cloneNode = function(node, population) {
     if (!population) return;
+    if (population.hasOwnProperty('populate-inner')) {
+        var content = node.html();
+        var newContent = content;
+        for (var i = 0; i < population['populate-inner'] - 1; i++) {
+            newContent = newContent + content;
+        }
+        node.html(newContent);
+    }
     for (var i = 0; i < population['populate'] - 1; i++) {
         var $clone = node.clone();
         populatejs.clearPopulateClasses($clone);
