@@ -46,7 +46,7 @@ When you've done, just replace ```populate.js``` string from your HTML and it wi
 
 What's inside?
 -------------
-This microlibrary was written completely test-driven using outstanding (QUnit js unit testing framework)[http://qunitjs.com/].
+This microlibrary was written completely test-driven using outstanding [QUnit js unit testing framework](http://qunitjs.com/).
 To run tests just open ```tests.html``` in your favorite browser.
 
 At a glance, populatejs does traversing DOM tree on document ready event and clone DOM-nodes you've choosen in efficient and usable manner.
