@@ -55,3 +55,25 @@ populatejs.clearPopulateClasses = function(node) {
         }
     }
 };
+
+populatejs.findTerminalPopulatingNodes = function($root) {
+    var children = $root.children();
+    var terminal = [];
+    if (populatejs.readPopulateClass($root) != null){
+        terminal.push($root);
+    }
+
+    var result = [];
+    for (var i =0; i< children.length; i++) {
+        var nodes = populatejs.findTerminalPopulatingNodes($(children[i]));
+        if (nodes.length > 0) {
+            result = result.concat(nodes);
+        }
+    }
+
+    if (result.length > 0) {
+        return result;
+    } else {
+        return terminal;
+    }
+};

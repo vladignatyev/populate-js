@@ -139,5 +139,5 @@ test('findTerminalPopulatingNodes: should properly find terminal nodes on popula
     equal(terminals.length, 3);
     equal(terminals[0].attr('id'), '20');
     equal(terminals[1].attr('id'), '11');
-    equal(terminals[1].attr('id'), '6');
+    equal(terminals[2].attr('id'), '6');
 });
