@@ -5,23 +5,32 @@ populatejs.readPopulateClass = function (node) {
     if (!classesString) return null;
 
     var classes = classesString.split(" ");
+    var result = {};
     for (var i = 0; i < classes.length; i++) {
         if (classes[i].match(/populate-inner(.*)(\d+)/gi)) {
-            return ["populate-inner", parseInt (classes[i].match(/\d+/)[0])];
+            if (!result.hasOwnProperty('populate-inner')) {
+                result['populate-inner'] = parseInt (classes[i].match(/\d+/)[0]);
+            }
         } else
         if (classes[i].match(/populate(.*)(\d+)/gi)) {
-            return ["populate", parseInt (classes[i].match(/\d+/)[0])];
+            if (!result.hasOwnProperty('populate')) {
+                result['populate'] = parseInt (classes[i].match(/\d+/)[0]);
+            }
         }
     }
-    return null;
+    if (!result.hasOwnProperty('populate') && !result.hasOwnProperty('populate-inner')) result = null;
+    return result;
 };
 
 
 populatejs.cloneNode = function(node, population) {
-    var $clone = node.clone();
-    populatejs.clearPopulateClasses($clone);
-    $clone.addClass('populated');
-    node.after($clone);
+    if (!population) return;
+    for (var i = 0; i < population['populate'] - 1; i++) {
+        var $clone = node.clone();
+        populatejs.clearPopulateClasses($clone);
+        $clone.addClass('populated');
+        node.after($clone);
+    }
 };
 
 
