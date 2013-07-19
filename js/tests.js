@@ -26,12 +26,15 @@ test('readPopulateClass: should read pair of first declarations', function () {
             "populate": 10});
 });
 
+
 module('Clearing populated nodes');
-test('clearPopulateClasses', function () {
+test('clearPopulateClasses: simple', function () {
     var $node = $('<li class="populate-2"></li>');
     populatejs.clearPopulateClasses($node);
     ok(!$node.hasClass('populate-2'), 'should not save populate-2 class');
+});
 
+test('clearPopulateClasses: extended case', function () {
     var $node = $('<li class="foobar populate-7 populate3 populate-inner4"></li>');
     populatejs.clearPopulateClasses($node);
     ok(!$node.hasClass('populate-7'), 'should not save populate-7 class');
@@ -40,14 +43,17 @@ test('clearPopulateClasses', function () {
     ok($node.hasClass('foobar'), 'should save user classes');
 });
 
+
 module('Nodes cloning');
+var $fixture = $('#qunit-fixture');
+
 test('cloneNode: should add cloned sibling and mark it populated', function () {
     $('<ol><li class="populate-3">foobar</li></ol>').appendTo('#qunit-fixture');
-    var $node = $($('#qunit-fixture').find('ol>li')[0]);
 
+    var $node = $($fixture.find('ol>li')[0]);
     populatejs.cloneNode($node);
 
-    var $lis = $('#qunit-fixture').find('ol>li');
+    var $lis = $fixture.find('ol>li');
     equal($lis.length, 3);
 
     ok($($lis[1]).hasClass('populated'));
@@ -61,17 +67,18 @@ test('cloneNode: should add cloned sibling and mark it populated', function () {
 
 test('cloneNode: should not populate', function () {
     $('<ol><li>foobar</li></ol>').appendTo('#qunit-fixture');
-    var $node = $($('#qunit-fixture').find('ol>li')[0]);
+    var $node = $($fixture.find('ol>li')[0]);
 
     populatejs.cloneNode($node);
 
-    var $lis = $('#qunit-fixture').find('ol>li');
+    var $lis = $fixture.find('ol>li');
     equal($lis.length, 1);
 });
 
+
 test('cloneNode: should populate inner content', function () {
     $('<ol><li class="populate-inner-3">foobar<em>test</em></li></ol>').appendTo('#qunit-fixture');
-    var $node = $($('#qunit-fixture').find('ol>li')[0]);
+    var $node = $($fixture.find('ol>li')[0]);
 
     populatejs.cloneNode($node);
 
@@ -80,17 +87,18 @@ test('cloneNode: should populate inner content', function () {
 
 test('cloneNode: should populate inner content and node', function () {
     $('<ol><li class="populate-2 populate-inner-3">foobar<em>test</em></li></ol>').appendTo('#qunit-fixture');
-    var $node = $($('#qunit-fixture').find('ol>li')[0]);
+    var $node = $($fixture.find('ol>li')[0]);
 
     populatejs.cloneNode($node);
 
-    var $lis = $('#qunit-fixture').find('ol>li');
+    var $lis = $fixture.find('ol>li');
     equal($lis.length, 2);
     for (var i = 0; i < 2; i++) {
         equal($($lis[i]).html(), 'foobar<em>test</em>foobar<em>test</em>foobar<em>test</em>');
     }
 
 });
+
 
 module('Tree traversing');
 
@@ -138,13 +146,13 @@ test('findTerminalPopulatingNodes: should properly find terminal nodes on popula
     equal(terminals[2].attr('id'), '6');
 });
 
-test('traverseUpFromTerminals',function(){
+test('traverseUpFromTerminals', function () {
     $(treeFixture).appendTo($('#qunit-fixture'));
     var terminals = [$('#20'), $('#11'), $('#6')];
 
     var nodesToClone = [];
 
-    populatejs.traverseUpFromTerminals(terminals, function(node){
+    populatejs.traverseUpFromTerminals(terminals, function (node) {
         nodesToClone.push(node);
     });
 

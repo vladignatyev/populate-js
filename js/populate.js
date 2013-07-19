@@ -1,7 +1,7 @@
 if (typeof populatejs == 'undefined') var populatejs = {};
 
 populatejs.readPopulateClass = function (node) {
-    classesString = node.attr('class');
+    var classesString = node.attr('class');
     if (!classesString) return null;
 
     var classes = classesString.split(" ");
@@ -33,7 +33,7 @@ populatejs.cloneNode = function (node) {
         }
         node.html(newContent);
     }
-    for (var i = 0; i < population['populate'] - 1; i++) {
+    for (var j = 0; j < population['populate'] - 1; j++) {
         var $clone = node.clone();
         populatejs.clearPopulateClasses($clone);
         $clone.addClass('populated');
