@@ -25,6 +25,7 @@ test('clearPopulateClasses', function(){
     ok(!$node.hasClass('populate-2'), 'should not save populate-2 class');
 
     var $node = $('<li class="foobar populate-7 populate3 populate-inner4"></li>');
+    populatejs.clearPopulateClasses($node);
     ok(!$node.hasClass('populate-7'), 'should not save populate-7 class');
     ok(!$node.hasClass('populate3'), 'should not save populate3 class');
     ok(!$node.hasClass('populate-inner4'), 'should not save populate-inner4 class');
@@ -36,7 +37,7 @@ test('cloneNode: should add cloned sibling and mark it populated', function(){
     $('<ol><li class="populate-2">foobar</li></ol>').appendTo('#qunit-fixture');
     var $node = $($('#qunit-fixture').find('ol>li')[0]);
 
-    var population = populatejs.readPopulateClass($node.className);
+    var population = populatejs.readPopulateClass($node.attr('class'));
     populatejs.cloneNode($node, population);
 
     var $lis = $('#qunit-fixture').find('ol>li');
