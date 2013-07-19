@@ -77,7 +77,7 @@ populatejs.findTerminalPopulatingNodes = function ($root) {
 populatejs.traverseUpFromTerminals = function (terminals, callable) {
     var plain = [];
     for (var i = 0; i < terminals.length; i++) {
-        plain.push(terminals[i][0]); //"unjquery elements"
+        plain.push(terminals[i][0]);  // "unjquery elements"
     }
     while (plain.length > 0) {
         var terminal = plain.shift();
@@ -94,3 +94,14 @@ populatejs.traverseUpFromTerminals = function (terminals, callable) {
         }
     }
 };
+
+populatejs.init = function($root) {
+    var terminals = populatejs.findTerminalPopulatingNodes($root);
+    populatejs.traverseUpFromTerminals(terminals, populatejs.cloneNode);
+};
+
+//noinspection JSUnresolvedVariable
+if (typeof populatejsAsLib == 'undefined')
+    $(document).ready(function(){
+    populatejs.init($('body'));
+});
