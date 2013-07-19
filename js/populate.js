@@ -65,10 +65,7 @@ populatejs.findTerminalPopulatingNodes = function($root) {
 
     var result = [];
     for (var i =0; i< children.length; i++) {
-        var nodes = populatejs.findTerminalPopulatingNodes($(children[i]));
-        if (nodes.length > 0) {
-            result = result.concat(nodes);
-        }
+        result = result.concat(populatejs.findTerminalPopulatingNodes($(children[i])));
     }
 
     if (result.length > 0) {
