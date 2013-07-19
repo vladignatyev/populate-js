@@ -52,9 +52,12 @@ test('cloneNode: should add cloned sibling and mark it populated', function () {
     equal($lis.length, 3);
 
     ok($($lis[1]).hasClass('populated'));
+    ok($($lis[2]).hasClass('populated'));
     equal($($lis[1]).html(), 'foobar');
+    equal($($lis[2]).html(), 'foobar');
 
     ok(!$($lis[1]).hasClass('populate-2'), "should not save populate* classes for populated nodes");
+    ok(!$($lis[2]).hasClass('populate-2'), "should not save populate* classes for populated nodes");
 });
 
 test('cloneNode: should not populate', function () {
@@ -75,4 +78,19 @@ test('cloneNode: should populate inner content', function () {
     populatejs.cloneNode($node, population);
 
     equal($node.html(), 'foobar<em>test</em>foobar<em>test</em>foobar<em>test</em>');
+});
+
+test('cloneNode: should populate inner content and node', function () {
+    $('<ol><li class="populate-2 populate-inner-3">foobar<em>test</em></li></ol>').appendTo('#qunit-fixture');
+    var $node = $($('#qunit-fixture').find('ol>li')[0]);
+
+    var population = populatejs.readPopulateClass($node);
+    populatejs.cloneNode($node, population);
+
+    var $lis = $('#qunit-fixture').find('ol>li');
+    equal($lis.length, 2);
+    for (var i = 0; i < 2; i++) {
+        equal($($lis[i]).html(), 'foobar<em>test</em>foobar<em>test</em>foobar<em>test</em>');
+    }
+
 });
