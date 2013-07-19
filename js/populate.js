@@ -1,6 +1,7 @@
 if (typeof populatejs == 'undefined') var populatejs = {};
 
-populatejs.readPopulateClass = function (classesString) {
+populatejs.readPopulateClass = function (node) {
+    classesString = node.attr('class');
     if (!classesString) return null;
 
     var classes = classesString.split(" ");
