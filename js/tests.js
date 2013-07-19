@@ -135,9 +135,25 @@ test('findTerminalPopulatingNodes: should properly find terminal nodes on popula
     $(treeFixture).appendTo($('#qunit-fixture'));
     var $root = $('#1');
     var terminals = populatejs.findTerminalPopulatingNodes($root);
-    console.log(terminals);
     equal(terminals.length, 3);
     equal(terminals[0].attr('id'), '20');
     equal(terminals[1].attr('id'), '11');
     equal(terminals[2].attr('id'), '6');
+});
+
+test('traverseUpFromTerminals',function(){
+    $(treeFixture).appendTo($('#qunit-fixture'));
+    var terminals = [$('#20'), $('#11'), $('#6')];
+
+    var nodesToClone = [];
+
+    populatejs.traverseUpFromTerminals(terminals, function(node){
+        nodesToClone.push(node);
+    });
+
+    equal(nodesToClone[0].attr('id'), '20');
+    equal(nodesToClone[1].attr('id'), '11');
+    equal(nodesToClone[2].attr('id'), '6');
+    equal(nodesToClone[3].attr('id'), '9');
+    equal(nodesToClone[4].attr('id'), '5');
 });
