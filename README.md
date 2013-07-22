@@ -35,7 +35,7 @@ How to use
 ----------
 Drop following code snippet into your HTML page
 ```html
-<script type="text/javascript" src="https://raw.github.com/vladignatyev/populate-js/master/js/populate.js"></script>
+<script type="text/javascript" src="https://rawgithub.com/vladignatyev/populate-js/master/js/populate.js"></script>
 ```
 And you're ready! 
 To populate category page with items just add ```populate-10``` CSS class to ```<div class="item">``` and you'll get 10 items on your page.
